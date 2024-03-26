@@ -20,7 +20,7 @@ function App() {
         `https://api.dexscreener.com/latest/dex/pairs/bsc/${
           contractAddress
             ? contractAddress
-            : "0xc54aa5694cd8bd419ac3bba11ece94aa6c5f9b01"
+            : "0x2eebe0c34da9ba65521e98cbaa7d97496d05f489"
         }`
       );
       const price = response.data.pairs[0].priceUsd;
@@ -46,7 +46,7 @@ function App() {
 
   // Calculate total value based on the amount and token price
   useEffect(() => {
-    setTotalValue((!tokensAmount ? 9667.4425 : tokensAmount) * tokenPrice);
+    setTotalValue((!tokensAmount ? 2307.0829 : tokensAmount) * tokenPrice);
   }, [tokensAmount, tokenPrice]);
 
   // Fetch the token price when the component mounts and at regular intervals
