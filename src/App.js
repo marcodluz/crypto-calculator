@@ -113,13 +113,15 @@ function App() {
             variant="outlined"
             onChange={handleTokensAmountChange}
             value={tokensAmount}
+            type="number"
           />
           <TextField
             id="investment-amount"
             label="Investment Amount"
             variant="outlined"
             onChange={handleInvestmentAmountChange}
-            value={tokensAmount}
+            value={investmentAmount}
+            type="number"
           />
         </FormControl>
         <p>
