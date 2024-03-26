@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 
 function App() {
-  const [amount, setAmount] = useState(); // Token amount
+  const [tokensAmount, setTokensAmount] = useState(); // Token amount
   const [contractAddress, setContractAddress] = useState(""); // Token contract address
   const [totalValue, setTotalValue] = useState(0); // Total value in USD
   const [tokenPrice, setTokenPrice] = useState(0); // Current token price
   const [tokenName, setTokenName] = useState(""); // Token name
   const [exchangeRate, setExchangeRate] = useState(1);
+  const [investmentAmount, setInvesmentAmount] = useState(); // Token amount
 
   // Function to fetch the current token price
   const fetchTokenPrice = async () => {
@@ -46,8 +46,8 @@ function App() {
 
   // Calculate total value based on the amount and token price
   useEffect(() => {
-    setTotalValue((!amount ? 9667.4425 : amount) * tokenPrice);
-  }, [amount, tokenPrice]);
+    setTotalValue((!tokensAmount ? 9667.4425 : tokensAmount) * tokenPrice);
+  }, [tokensAmount, tokenPrice]);
 
   // Fetch the token price when the component mounts and at regular intervals
   useEffect(() => {
@@ -61,24 +61,29 @@ function App() {
     }; // Cleanup intervals on component unmount
   }, [contractAddress]);
 
-  const handleAmountChange = (e) => {
-    setAmount(e.target.value);
+  const handleTokensAmountChange = (e) => {
+    setTokensAmount(e.target.value);
   };
 
   const handleContractChange = (e) => {
     setContractAddress(e.target.value);
   };
 
+  const handleInvestmentAmountChange = (e) => {
+    setInvesmentAmount(e.target.value);
+  };
+
   // Function to render the investment comparison
   const renderInvestmentComparison = () => {
     const actualValueGBP = totalValue * exchangeRate;
-    const difference = actualValueGBP - 425;
+    const difference =
+      actualValueGBP - (investmentAmount ? investmentAmount : 425);
     const comparisonColor = difference > 0 ? "green" : "red";
 
     return (
       <>
         <p>
-          <b>Investment Value:</b> £{425}
+          <b>Investment Value:</b> £{investmentAmount ? investmentAmount : 425}
         </p>
         <p style={{ color: comparisonColor }}>
           <b>Return:</b> £ {difference.toFixed(2)}
@@ -106,9 +111,15 @@ function App() {
             id="tokens-amount"
             label="Tokens Amount"
             variant="outlined"
-            onChange={handleAmountChange}
-            value={amount}
-            startAdornment={<InputAdornment position="start">$</InputAdornment>}
+            onChange={handleTokensAmountChange}
+            value={tokensAmount}
+          />
+          <TextField
+            id="investment-amount"
+            label="Investment Amount"
+            variant="outlined"
+            onChange={handleInvestmentAmountChange}
+            value={tokensAmount}
           />
         </FormControl>
         <p>
